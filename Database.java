@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.*;
 
 public class Database {
     public Connection config() {
@@ -43,6 +42,21 @@ public class Database {
             System.out.println(res.getString("FirstName") + " " + res.getString("LastName") +
                     " " + res.getString("Address") + " " + res.getString("City") + " " + res.getString("State") + " "
                     + res.getString("Zip") + " " + res.getString("PhoneNumber") + " " + res.getString("Email"));
+        }
+    }
+
+    public void updateData(Database db, Connection conn, String FirstName, String Lastname, AddressBook ab,
+            String address, String city, String state, int zip, int phone, String email) throws SQLException {
+        try {
+            String updateQuery = "update " + ab.getBookName() + " set Address = '" + address + "', City = '" + city
+                    + "', State = '"
+                    + state + "', Zip = " + zip + ", PhoneNumber = " + phone + ", Email = '" + email
+                    + "' where FirstName = '" + FirstName + "' and LastName = '" + Lastname + "'";
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(updateQuery);
+            System.out.println("Data updated");
+        } catch (Exception e) {
+            System.out.println("Data not updated");
         }
     }
 }
