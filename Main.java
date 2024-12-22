@@ -54,7 +54,8 @@ public class Main {
                                     System.out.println("1. Add Contact");
                                     System.out.println("2. Display Contacts");
                                     System.out.println("3. Edit Contact");
-                                    System.out.println("4. Back to Main Menu");
+                                    System.out.println("4. Delete Contact");
+                                    System.out.println("5. Back to Main Menu");
                                     System.out.print("Enter your choice: ");
                                     subChoice = scanner.nextInt();
 
@@ -72,15 +73,18 @@ public class Main {
                                             addressBook.updateContact(scanner, db, conn);
                                             System.out.println("Contact updated successfully.");
                                             break;
-
                                         case 4:
+                                            addressBook.deleteContact(scanner, db, conn);
+                                            System.out.println("Contact deleted successfully.");
+                                            break;
+                                        case 5:
                                             System.out.println("Returning to main menu...");
                                             break;
 
                                         default:
                                             System.out.println("Invalid choice. Please try again.");
                                     }
-                                } while (subChoice != 4);
+                                } while (subChoice != 5);
                             } else {
                                 System.out.println("Address Book not found.");
                             }

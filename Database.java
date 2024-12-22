@@ -59,4 +59,13 @@ public class Database {
             System.out.println("Data not updated");
         }
     }
+
+    public void deleteData(Connection conn, String AddressBookName, String FirstName, String LastName)
+            throws SQLException {
+        String deleteQuery = "delete from " + AddressBookName + " where FirstName = '" + FirstName
+                + "' and LastName = '" + LastName + "'";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(deleteQuery);
+        System.out.println("Data deleted");
+    }
 }

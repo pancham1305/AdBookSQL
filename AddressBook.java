@@ -52,6 +52,14 @@ class AddressBook {
         db.updateData(db, conn, FirstName, LastName, this, address, city, state, zip, phone, email);
     }
 
+    public void deleteContact(Scanner sc, Database db, Connection conn) throws SQLException {
+        System.out.println("Enter First Name:");
+        String FirstName = sc.next();
+        System.out.println("Enter Last Name:");
+        String LastName = sc.next();
+        db.deleteData(conn, bookName, FirstName, LastName);
+    }
+
     public String getBookName() {
         return bookName;
     }
