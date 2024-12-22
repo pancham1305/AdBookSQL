@@ -64,6 +64,14 @@ class AddressBook {
         db.getDataByCityOrState(conn, bookName, city, state);
     }
 
+    public void getCountByCity(Database db, Connection conn, String city, String state) throws SQLException {
+        db.getCountByCity(conn, state, city, state);
+    }
+
+    public void getCountByState(Database db, Connection conn, String city, String state) throws SQLException {
+        db.getCountByState(conn, state, city, state);
+    }
+    
     public String getBookName() {
         return bookName;
     }
