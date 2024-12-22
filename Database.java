@@ -19,10 +19,10 @@ public class Database {
     }
 
     public void createTable(Connection conn, String AddressBookName) throws SQLException {
-        String createQuery = "create table" + AddressBookName +
-                "(     FirstName VARCHAR(50) NOT NULL,     LastName VARCHAR(50) NOT NULL,     Address VARCHAR(255) NOT NULL,     City VARCHAR(100) NOT NULL,     State CHAR(2) NOT NULL,     Zip CHAR(5) NOT NULL,     PhoneNumber VARCHAR(15),     Email VARCHAR(100),     PRIMARY KEY (FirstName, LastName)  )";
+        String createQuery = "create table " + AddressBookName +
+                "(     FirstName VARCHAR(50) NOT NULL,     LastName VARCHAR(50) NOT NULL,     Address VARCHAR(255) NOT NULL,     City VARCHAR(100) NOT NULL,     State CHAR(100) NOT NULL,     Zip CHAR(10) NOT NULL,     PhoneNumber VARCHAR(12),     Email VARCHAR(100),     PRIMARY KEY (FirstName, LastName)  )";
         Statement statement = conn.createStatement();
-        ResultSet res = statement.executeQuery(createQuery);
+        statement.executeUpdate(createQuery);
         System.out.println("Table created");
     }
 
@@ -31,7 +31,7 @@ public class Database {
         String insertQuery = "insert into " + AddressBookName + " values('" + FirstName + "','" + LastName + "','"
                 + Address + "','" + City + "','" + State + "'," + Zip + "," + PhoneNumber + ",'" + Email + "')";
         Statement statement = conn.createStatement();
-        ResultSet res = statement.executeQuery(insertQuery);
+        statement.executeUpdate(insertQuery);
         System.out.println("Data inserted");
     }
 

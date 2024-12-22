@@ -29,6 +29,10 @@ class AddressBook {
         db.insertData(conn, bookName, FirstName, LastName, address, city, state, zip, phone, email);
     }
 
+    public void displayContacts(Database db, Connection conn) throws SQLException {
+        db.displayData(conn, bookName);
+    }
+
     public String getBookName() {
         return bookName;
     }
