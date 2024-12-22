@@ -80,4 +80,28 @@ public class Database {
                     " " + res.getString("Address") + " " + res.getString("City") + " " + res.getString("State") + " ");
         }
     }
+
+    public void getCountByCity(Connection conn, String AddressBookName, String city, String State)
+            throws SQLException {
+        // String getQuery = "select * from "+AddressBookName+" where City = '"+city+"'
+        // or State = '"+State+"'";
+        String query = "select count(*) from " + AddressBookName + " group by city";
+        Statement stmt = conn.createStatement();
+        ResultSet res = stmt.executeQuery(query);
+        while (res.next()) {
+            System.out.println(res.getString("city") + " " + res.getString("count(*)"));
+        }
+    }
+
+    public void getCountByState(Connection conn, String AddressBookName, String city, String State)
+            throws SQLException {
+        String query = "select count(*) from " + AddressBookName + " group by state";
+        Statement stmt = conn.createStatement();
+        ResultSet res = stmt.executeQuery(query);
+        while (res.next()) {
+            System.out.println(res.getString("state") + " " + res.getString("count(*)"));
+        }
+    }
 }
+
+// Distinct City and State
