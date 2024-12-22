@@ -68,4 +68,16 @@ public class Database {
         statement.executeUpdate(deleteQuery);
         System.out.println("Data deleted");
     }
+
+    public void getDataByCityOrState(Connection conn, String AddressBookName, String city, String state)
+            throws SQLException {
+        String getQuery = "select * from " + AddressBookName + " where City = '" + city + "' or State = '" + state
+                + "'";
+        Statement statement = conn.createStatement();
+        ResultSet res = statement.executeQuery(getQuery);
+        while (res.next()) {
+            System.out.println(res.getString("FirstName") + " " + res.getString("LastName") +
+                    " " + res.getString("Address") + " " + res.getString("City") + " " + res.getString("State") + " ");
+        }
+    }
 }

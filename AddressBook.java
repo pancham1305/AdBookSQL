@@ -60,6 +60,10 @@ class AddressBook {
         db.deleteData(conn, bookName, FirstName, LastName);
     }
 
+    public void getDataByCityOrState(Database db, Connection conn, String city, String state) throws SQLException {
+        db.getDataByCityOrState(conn, bookName, city, state);
+    }
+
     public String getBookName() {
         return bookName;
     }
