@@ -12,18 +12,18 @@ class AddressBook {
 
     public void createContact(Scanner ts, Database db, Connection conn) throws SQLException {
         System.out.println("Enter First Name:");
-        String FirstName = ts.next();
+        String FirstName = ts.nextLine();
         System.out.println("Enter Last Name:");
-        String LastName = ts.next();
+        String LastName = ts.nextLine();
         System.out.println("Enter City:");
-        String city = ts.next();
+        String city = ts.nextLine();
         System.out.println("Enter State:");
-        String state = ts.next();
+        String state = ts.nextLine();
         System.out.println("Enter Email:");
-        String email = ts.next();
+        String email = ts.nextLine();
         System.out.println("Enter Phone:");
         int phone = ts.nextInt();
-        System.out.println("Enter ZIP:");
+        System.out.println("Enter Zip:");
         int zip = ts.nextInt();
         String address = city + ", " + state + " " + zip;
         db.insertData(conn, bookName, FirstName, LastName, address, city, state, zip, phone, email);
@@ -35,15 +35,15 @@ class AddressBook {
 
     public void updateContact(Scanner ts, Database db, Connection conn) throws SQLException {
         System.out.println("Enter First Name:");
-        String FirstName = ts.next();
+        String FirstName = ts.nextLine();
         System.out.println("Enter Last Name:");
-        String LastName = ts.next();
+        String LastName = ts.nextLine();
         System.out.println("Enter City:");
-        String city = ts.next();
+        String city = ts.nextLine();
         System.out.println("Enter State:");
-        String state = ts.next();
+        String state = ts.nextLine();
         System.out.println("Enter Email:");
-        String email = ts.next();
+        String email = ts.nextLine();
         System.out.println("Enter Phone:");
         int phone = ts.nextInt();
         System.out.println("Enter ZIP:");
@@ -54,9 +54,9 @@ class AddressBook {
 
     public void deleteContact(Scanner sc, Database db, Connection conn) throws SQLException {
         System.out.println("Enter First Name:");
-        String FirstName = sc.next();
+        String FirstName = sc.nextLine();
         System.out.println("Enter Last Name:");
-        String LastName = sc.next();
+        String LastName = sc.nextLine();
         db.deleteData(conn, bookName, FirstName, LastName);
     }
 
@@ -71,7 +71,11 @@ class AddressBook {
     public void getCountByState(Database db, Connection conn, String city, String state) throws SQLException {
         db.getCountByState(conn, state, city, state);
     }
-    
+
+    public void getSortedListByNameGivenaCity(String city, Connection conn, String bookName, Database db) {
+        db.sortedList(conn, city, bookName);
+    }
+
     public String getBookName() {
         return bookName;
     }

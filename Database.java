@@ -100,6 +100,18 @@ public class Database {
             System.out.println(res.getString("state") + " " + res.getString("count(*)"));
         }
     }
-}
 
-// Distinct City and State
+    public void sortedList(Connection conn, String city, String bookName) {
+        String query = "select FirstName, LastName from " + bookName + " where city = '" + city
+                + "' order by FirstName";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                System.out.println(res.getString("FirstName") + " " + res.getString("LastName"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+}
