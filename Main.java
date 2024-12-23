@@ -30,7 +30,9 @@ public class Main {
                         case 1:
                             System.out.print("Enter the name of the new Address Book: ");
                             String bookName = scanner.nextLine();
-                            addressBookSystem.addAddressBook(new AddressBook(bookName), db, conn);
+                            System.out.println("Enter Type of AddressBook (Friends, Family, Profession, etc.):");
+                            String type = scanner.nextLine();
+                            addressBookSystem.addAddressBook(new AddressBook(bookName, type), db, conn);
                             System.out.println("Address Book created successfully.");
                             break;
 
@@ -64,7 +66,7 @@ public class Main {
                                     System.out.println("9. Back to Main Menu");
                                     System.out.print("Enter your choice: ");
                                     subChoice = scanner.nextInt();
-
+                                    scanner.nextLine();
                                     switch (subChoice) {
                                         case 1:
                                             addressBook.createContact(scanner, db, conn);
@@ -82,7 +84,6 @@ public class Main {
                                             System.out.println("Contact deleted successfully.");
                                             break;
                                         case 5:
-                                            scanner.nextLine();
                                             System.out.println("Enter City:");
                                             String searchCity = scanner.nextLine();
                                             System.out.println("Enter State:");
@@ -90,7 +91,6 @@ public class Main {
                                             addressBook.getDataByCityOrState(db, conn, searchCity, searchState);
                                             break;
                                         case 6:
-                                            scanner.nextLine();
                                             System.out.println("Enter City:");
                                             String countCity = scanner.nextLine();
                                             System.out.println("Enter State:");
@@ -98,7 +98,6 @@ public class Main {
                                             addressBook.getCountByCity(db, conn, countCity, countStateForCity);
                                             break;
                                         case 7:
-                                            scanner.nextLine();
                                             System.out.println("Enter City:");
                                             String cityForState = scanner.nextLine();
                                             System.out.println("Enter State:");
@@ -106,7 +105,6 @@ public class Main {
                                             addressBook.getCountByState(db, conn, cityForState, countState);
                                             break;
                                         case 8:
-                                            scanner.nextLine();
                                             System.out.println("Enter City:");
                                             String sortCity = scanner.nextLine();
                                             addressBook.getSortedListByNameGivenaCity(sortCity, conn, selectedBook, db);

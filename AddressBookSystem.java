@@ -5,11 +5,11 @@ public class AddressBookSystem {
     ArrayList<AddressBook> addressBookList = new ArrayList<>();
 
     private void loadAddressBooks(Database db, Connection conn) throws SQLException {
-        String query = "select * from information_schema.tables where table_schema = 'mydb'";
+        String query = "select * from metadata";
         Statement statement = conn.createStatement();
         ResultSet res = statement.executeQuery(query);
         while (res.next()) {
-            addressBookList.add(new AddressBook(res.getString("table_name")));
+            addressBookList.add(new AddressBook(res.getString("Table_Name"), res.getString("Type")));
         }
     }
 
@@ -22,14 +22,14 @@ public class AddressBookSystem {
         }
     }
 
-    private void createAddressBook(String name, Database db, Connection conn) throws SQLException {
-        AddressBook addressBook = new AddressBook(name);
-        db.createTable(conn, name);
+    private void createAddressBook(String name, String type, Database db, Connection conn) throws SQLException {
+        AddressBook addressBook = new AddressBook(name, type);
+        db.createTable(conn, name, type);
         addressBookList.add(addressBook);
 
     }
 
     public void addAddressBook(AddressBook addressBook, Database db, Connection conn) throws SQLException {
-        createAddressBook(addressBook.getBookName(), db, conn);
+        createAddressBook(addressBook.getBookName(), addressBook.getType(), db, conn);
     }
 }

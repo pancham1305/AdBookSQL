@@ -17,11 +17,16 @@ public class Database {
         return null;
     }
 
-    public void createTable(Connection conn, String AddressBookName) throws SQLException {
+    public void createTable(Connection conn, String AddressBookName, String type) throws SQLException {
         String createQuery = "create table " + AddressBookName +
                 "(     FirstName VARCHAR(50) NOT NULL,     LastName VARCHAR(50) NOT NULL,     Address VARCHAR(255) NOT NULL,     City VARCHAR(100) NOT NULL,     State CHAR(100) NOT NULL,     Zip CHAR(10) NOT NULL,     PhoneNumber VARCHAR(12),     Email VARCHAR(100),     PRIMARY KEY (FirstName, LastName)  )";
         Statement statement = conn.createStatement();
         statement.executeUpdate(createQuery);
+        System.out.println("Table created");
+        // insert into metadata
+        String insertQuery = "insert into metadata values('" + AddressBookName + "', '" + type + "')";
+        Statement stmt = conn.createStatement();
+        statement.executeUpdate(insertQuery);
         System.out.println("Table created");
     }
 
@@ -32,17 +37,6 @@ public class Database {
         Statement statement = conn.createStatement();
         statement.executeUpdate(insertQuery);
         System.out.println("Data inserted");
-    }
-
-    public void displayData(Connection conn, String AddressBookName) throws SQLException {
-        String displayQuery = "select *from " + AddressBookName;
-        Statement statement = conn.createStatement();
-        ResultSet res = statement.executeQuery(displayQuery);
-        while (res.next()) {
-            System.out.println(res.getString("FirstName") + " " + res.getString("LastName") +
-                    " " + res.getString("Address") + " " + res.getString("City") + " " + res.getString("State") + " "
-                    + res.getString("Zip") + " " + res.getString("PhoneNumber") + " " + res.getString("Email"));
-        }
     }
 
     public void updateData(Database db, Connection conn, String FirstName, String Lastname, AddressBook ab,
@@ -69,36 +63,36 @@ public class Database {
         System.out.println("Data deleted");
     }
 
+    public void displayData(Connection conn, String AddressBookName) throws SQLException {
+        String displayQuery = "select * from " + AddressBookName;
+        Statement statement = conn.createStatement();
+        ResultSet res = statement.executeQuery(displayQuery);
+        TableFormatter.displayAsTable(res);
+    }
+
     public void getDataByCityOrState(Connection conn, String AddressBookName, String city, String state)
             throws SQLException {
         String getQuery = "select * from " + AddressBookName + " where City = '" + city + "' or State = '" + state
                 + "'";
         Statement statement = conn.createStatement();
         ResultSet res = statement.executeQuery(getQuery);
-        while (res.next()) {
-            System.out.println(res.getString("FirstName") + " " + res.getString("LastName") +
-                    " " + res.getString("Address") + " " + res.getString("City") + " " + res.getString("State") + " ");
-        }
+        TableFormatter.displayAsTable(res);
     }
 
     public void getCountByCity(Connection conn, String AddressBookName, String city, String State)
             throws SQLException {
-        String query = "select count(*) from " + AddressBookName + " group by city";
+        String query = "select city, count(*) as count from " + AddressBookName + " group by city";
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
-        while (res.next()) {
-            System.out.println(res.getString("city") + " " + res.getString("count(*)"));
-        }
+        TableFormatter.displayAsTable(res);
     }
 
     public void getCountByState(Connection conn, String AddressBookName, String city, String State)
             throws SQLException {
-        String query = "select count(*) from " + AddressBookName + " group by state";
+        String query = "select state, count(*) as count from " + AddressBookName + " group by state";
         Statement stmt = conn.createStatement();
         ResultSet res = stmt.executeQuery(query);
-        while (res.next()) {
-            System.out.println(res.getString("state") + " " + res.getString("count(*)"));
-        }
+        TableFormatter.displayAsTable(res);
     }
 
     public void sortedList(Connection conn, String city, String bookName) {
@@ -107,11 +101,9 @@ public class Database {
         try {
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
-            while (res.next()) {
-                System.out.println(res.getString("FirstName") + " " + res.getString("LastName"));
-            }
+            TableFormatter.displayAsTable(res);
         } catch (Exception e) {
-            System.out.println("Error");
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

@@ -6,8 +6,11 @@ import java.util.*;
 class AddressBook {
     private String bookName;
 
-    public AddressBook(String bookName) {
+    private String type;
+
+    public AddressBook(String bookName, String type) {
         this.bookName = bookName;
+        this.type = type;
     }
 
     public void createContact(Scanner ts, Database db, Connection conn) throws SQLException {
@@ -78,5 +81,9 @@ class AddressBook {
 
     public String getBookName() {
         return bookName;
+    }
+
+    public String getType() {
+        return type;
     }
 }
