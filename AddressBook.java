@@ -1,7 +1,9 @@
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.sql.Statement;
 
 class AddressBook {
     private String bookName;
@@ -86,4 +88,15 @@ class AddressBook {
     public String getType() {
         return type;
     }
+    public void getCountByType(Connection conn) {
+    String query = "SELECT type, COUNT(*) AS count FROM Contacts GROUP BY type";
+    try (Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+        System.out.println("Contact Counts by Type:");
+        TableFormatter.displayAsTable(rs);
+    } catch (SQLException e) {
+        System.err.println("Error fetching counts by type: " + e.getMessage());
+    }
+}
+
 }

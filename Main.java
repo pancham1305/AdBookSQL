@@ -112,6 +112,10 @@ public class Main {
                                         case 9:
                                             System.out.println("Returning to main menu...");
                                             break;
+                                        case 10:
+                                            addressBook.getCountByType(conn);
+                                            break;
+
                                         default:
                                             System.out.println("Invalid choice. Please try again.");
                                     }
