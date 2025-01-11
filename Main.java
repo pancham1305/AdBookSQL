@@ -1,5 +1,7 @@
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -115,7 +117,16 @@ public class Main {
                                         case 10:
                                             addressBook.getCountByType(conn);
                                             break;
-
+                                        case 11:
+                                            System.out.print("Enter the Contact ID to assign to multiple types: ");
+                                            int contactId = scanner.nextInt();
+                                            scanner.nextLine(); // Clear the newline
+                                            System.out
+                                                    .print("Enter the types (comma-separated, e.g., Friend,Family): ");
+                                            String typesInput = scanner.nextLine();
+                                            List<String> types = Arrays.asList(typesInput.split(","));
+                                            addressBook.addContactToMultipleTypes(contactId, types, conn);
+                                            break;
                                         default:
                                             System.out.println("Invalid choice. Please try again.");
                                     }
