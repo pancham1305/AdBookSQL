@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.List;
 
 public class Database {
     public Connection config() {
@@ -15,6 +16,20 @@ public class Database {
             System.out.println("Connection not established");
         }
         return null;
+    }
+
+    private int getTypeId(String type, Connection conn) throws SQLException {
+        String query = "SELECT id FROM Types WHERE type = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, type);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                } else {
+                    throw new SQLException("Type not found: " + type);
+                }
+            }
+        }
     }
 
     public void createTable(Connection conn, String AddressBookName, String type) throws SQLException {
@@ -106,4 +121,32 @@ public class Database {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    public void getCountByType(Connection conn) {
+        String query = "SELECT type, COUNT(*) AS count FROM Contacts GROUP BY type";
+        try (Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+            System.out.println("Contact Counts by Type:");
+            TableFormatter.displayAsTable(rs);
+        } catch (SQLException e) {
+            System.err.println("Error fetching counts by type: " + e.getMessage());
+        }
+    }
+
+    public void addContactToMultipleTypes(int contactId, List<String> types, Connection conn) {
+        String query = "INSERT INTO Contact_Type (contact_id, type_id) VALUES (?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            for (String type : types) {
+                int typeId = getTypeId(type, conn); // Assume this method fetches type_id from the DB
+                stmt.setInt(1, contactId);
+                stmt.setInt(2, typeId);
+                stmt.executeUpdate();
+            }
+            System.out.println("Contact added to multiple types successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error assigning contact to multiple types: " + e.getMessage());
+        }
+    }
+
+    
 }

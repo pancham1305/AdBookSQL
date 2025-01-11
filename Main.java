@@ -115,7 +115,7 @@ public class Main {
                                             System.out.println("Returning to main menu...");
                                             break;
                                         case 10:
-                                            addressBook.getCountByType(conn);
+                                            addressBook.getCountByType(conn, db);
                                             break;
                                         case 11:
                                             System.out.print("Enter the Contact ID to assign to multiple types: ");
@@ -125,7 +125,7 @@ public class Main {
                                                     .print("Enter the types (comma-separated, e.g., Friend,Family): ");
                                             String typesInput = scanner.nextLine();
                                             List<String> types = Arrays.asList(typesInput.split(","));
-                                            addressBook.addContactToMultipleTypes(contactId, types, conn);
+                                            addressBook.addContactToMultipleTypes(db, contactId, types, conn);
                                             break;
                                         default:
                                             System.out.println("Invalid choice. Please try again.");
